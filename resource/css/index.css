@@ -1,0 +1,16 @@
+:root{
+
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+
+}
+
+.fireworker{
+    position: absolute;
+    background-color: black;
+}
