@@ -59,26 +59,31 @@
             this.fireWorkers = this.fireWorkers.filter(function(value, index, arr){
                 return value.state !== 2;
             });
-
+           
             for(var fireWorker of this.fireWorkers){
-                fireWorker.update();
+                console.log(fireWorker);
                 fireWorker.render(this.ctx);
-
-                // 计算当前位置和最终位置之间的长度
-                var distance = Math.sqrt(Math.pow(this.canvas.width - fireWorker.pos.x, 2) + Math.pow(this.canvas.height - fireWorker.pos.y, 2));
-
-                // random chance of 1% if rockets is above the middle
-                var randomChance = fireWorker.pos.y < (this.canvas.width * 2 / 3) ? (Math.random() * 100 <= 1) : false;
-                if(fireWorker.pos.y < this.canvas.height / 5 || fireWorker.vel.y >= 0 || distance < 50 || randomChance){
-                    fireWorker.state = 1;
-                    fireWorker.explode();
+                fireWorker.update();
+                if(fireWorker.state === 0){
+                    var pos = fireWorker.particles[0].pos;
+                    var vel = fireWorker.particles[0].vel;
+                    // 计算当前位置和最终位置之间的长度
+                    var distance = Math.sqrt(Math.pow(this.canvas.width - pos.x, 2) + Math.pow(this.canvas.height - pos.y, 2));
+                    console.log('distance:',distance);
+                    console.log('pos:',pos);
+                    console.log('vel:',vel);
+                    console.log('fireWorker.particles[0].exist():',fireWorker.particles[0].exist());
+                    if(pos.y < this.canvas.height / 5 || vel.y >= 0 || distance < 50 || !fireWorker.particles[0].exist()){
+                        fireWorker.state = 1;
+                        fireWorker.explode();
+                    }
                 }
+                
             }
             
             
         },
-        exist: function(){
-
+        exist: function(){ 
         },
         add : function(_this, x, y){
             if(x === undefined || y === undefined){
@@ -86,10 +91,12 @@
                     var fireWorker = new FireWorker({
                         'canvas' : _this.canvas
                     });
-                    fireWorker.explosionColor = Math.floor(Math.random() * 360 / 10) * 10;
+                    var color = Math.floor(Math.random() * 360 / 10) * 10;
+                    fireWorker.color = color;
+                    fireWorker.explosionColor = color;
                     fireWorker.vel.y = Math.random() * -3 - 4;
                     fireWorker.vel.x = Math.random() * 6 - 3;
-                    fireWorker.size = 8;
+                    fireWorker.size = 10;
                     fireWorker.shrink = 0.999;
                     fireWorker.gravity = 0.01;
                     _this.fireWorkers.push(fireWorker);
@@ -173,7 +180,9 @@
             var count = Math.random() * 10 + 80;
 
             for (var i = 0; i < count; i++) {
-                var particle = new Particle(this.pos);
+                var particle = new Particle({
+                    'pos': this.pos
+                });
                 var angle = Math.random() * Math.PI * 2;
     
                 // emulate 3D effect by using cosine and put more particles in the middle

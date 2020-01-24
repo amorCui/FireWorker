@@ -7,10 +7,23 @@
 }
 
 body{
-
+    background-image: url('../images/background.jpg');
+    /* 背景图垂直、水平均居中 */
+    background-position: center center;
+    /* 背景图不平铺 */
+    background-repeat: no-repeat;
+    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-attachment: fixed;  
+    /* 让背景图基于容器大小伸缩 */
+    background-size: cover;
 }
 
 .fireworker{
     position: absolute;
-    background-color: black;
+    /* background-color: black; */
+
+    background:rgba(255,255,255,0);/*关键点*/
+	z-index:1;/*确保在遮盖的元素的上方*/
+	top:0px;
+	left:0px;
 }

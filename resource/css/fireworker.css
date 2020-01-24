@@ -1,0 +1,84 @@
+:root{
+
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+
+}
+
+.fireworker{
+    position: absolute;
+    /* background-color: black; */
+
+    background:rgba(255,255,255,0);/*关键点*/
+	z-index:1;/*确保在遮盖的元素的上方*/
+	top:0px;
+	left:0px;
+}
+
+
+/*光标动画*/
+@keyframes caret {
+    50% {
+        border-right: 5px solid #000000;
+    }
+}
+
+/*文本动画：从宽度为0开始*/
+@keyframes text {
+    from {width: 0;}
+}
+@keyframes text2 {
+    from {width: 0;}
+    to {width: 18ch;}
+}
+@keyframes text3 {
+    from {width: 0;}
+    to {width: 8ch;}
+}
+
+.text{
+    
+}
+
+.line1{
+    top: 2ch;
+    left: 4ch;
+    width: 18ch;
+    /* 字符长度，中文是双倍长度所以是n*2 */
+    animation: caret 0.5s 1 step-end,text 5s 1 steps(9);
+}
+.line2{
+    top : 4ch;
+    left: 4ch;
+    width: 0;
+    animation: caret 0.5s 1 5s step-end,text2 5s 1 steps(9) 5s forwards;
+}
+.line3{
+    top : 6ch;
+    left: 4ch;
+    width: 0;
+    animation: caret 0.5s 1 10s step-end,text2 5s 1 steps(9) 10s forwards;
+}
+.line4{
+    top : 8ch;
+    left: 4ch;
+    width: 0;
+    animation: caret 0.5s 1 15s step-end,text3 5s 1 steps(4) 15s forwards;
+}
+.load-text {
+    position: absolute;
+    white-space:nowrap;
+    margin: 0 auto;
+    overflow: hidden;
+    word-break: keep-all;
+    background: rgba(fff,fff,fff,1);
+    color: #FF3300;
+    border-color: transparent;
+    font: bold 200%  monospace;
+    z-index: 10;
+}
